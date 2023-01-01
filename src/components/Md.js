@@ -21,6 +21,8 @@ import MailIcon from "@mui/icons-material/Mail";
 import { Card, useMediaQuery } from "@mui/material";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import { navigation, admin } from "../utils/navigation";
+import ListItemLink from "./ListItemLink";
+import { Outlet } from "react-router";
 const drawerWidth = 350;
 
 const openedMixin = (theme) => ({
@@ -94,7 +96,7 @@ export default function MiniDrawer({ container }) {
           color: "inactiveTime",
           zIndex: 9999,
           "& .MuiToolbar-root": {
-            pl: { xs: "24px", md: "20px" },
+            pl: { xs: "20px", md: "16px" },
           },
         }}
       >
@@ -159,25 +161,11 @@ export default function MiniDrawer({ container }) {
             <Box>
               {navigation.map((text, index) => (
                 <ListItem key={index} disablePadding sx={{ display: "block" }}>
-                  <ListItemButton
-                    sx={{
-                      minHeight: 48,
-                      justifyContent: "space-between",
-                      gap: "15px",
-                      px: 2.5,
-                    }}
-                  >
-                    <ListItemIcon
-                      sx={{
-                        minWidth: 0,
-                        color: "#191919",
-                        justifyContent: "center",
-                      }}
-                    >
-                      {text.icon}
-                    </ListItemIcon>
-                    <ListItemText color="#1a1a1a" primary={text.text} />
-                  </ListItemButton>
+                  <ListItemLink
+                    icon={text.icon}
+                    to={text.route}
+                    primary={text.text}
+                  />
                 </ListItem>
               ))}
             </Box>
@@ -211,61 +199,39 @@ export default function MiniDrawer({ container }) {
           </List>
         </Drawer>
       </Box>
+
       <Box
-        sx={{ pl: { xs: "16px", sm: "70px" }, transition: ".4s" }}
+        sx={{
+          pl: { xs: "16px", sm: "70px" },
+          pr: { xs: "16px", sm: "32px", md: "48px" },
+          pb: "16px",
+          transition: ".4s",
+        }}
         flexGrow={1}
         minHeight={"100vh"}
+        width="100%"
         bgcolor="background.main"
         onClick={() => {
           setOpen(false);
         }}
       >
-        <Toolbar />
-        <Card
+        {" "}
+        <Toolbar
           sx={{
-            width: "461px",
-            height: "400px",
-            display: "flex",
-            justifyContent: "center",
-            mb: "16px",
+            position: "fixed",
+            backgroundColor: "background.main",
+            width: "100%",
+            zIndex: "99",
+            minHeight: { xs: "56px", md: "40px" },
           }}
+        />
+        <Box
+          backgroundColor="background.main"
+          paddingTop={{ xs: "70px", md: "60px" }}
+          overflow="hidden"
         >
-          <Typography mt="100px" variant="h3">
-            00:30:00
-          </Typography>
-
-          {/* <IconButton color="accent"></IconButton> */}
-        </Card>
-        <Card
-          sx={{
-            width: "461px",
-            height: "400px",
-            display: "flex",
-            mb: "16px",
-            justifyContent: "center",
-          }}
-        >
-          <Typography mt="100px" variant="h3">
-            00:30:00
-          </Typography>
-
-          {/* <IconButton color="accent"></IconButton> */}
-        </Card>
-        <Card
-          sx={{
-            width: "461px",
-            height: "400px",
-            display: "flex",
-            justifyContent: "center",
-            mb: "16px",
-          }}
-        >
-          <Typography mt="100px" variant="h3">
-            00:30:00
-          </Typography>
-
-          {/* <IconButton color="accent"></IconButton> */}
-        </Card>
+          <Outlet />
+        </Box>
       </Box>
     </Box>
   );

@@ -20,6 +20,7 @@ import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import { Card } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
+import AnimatedPage from "./AnimatedPage";
 
 const drawerWidth = 350;
 
@@ -32,7 +33,7 @@ function App(props) {
   };
 
   const drawer = (
-    <div>
+    <AnimatedPage>
       <List
         sx={{
           pt: "58px",
@@ -52,7 +53,7 @@ function App(props) {
           </ListItem>
         ))}
       </List>
-    </div>
+    </AnimatedPage>
   );
   const theme = useTheme();
   console.log(theme.transitions.duration.leavingScreen);
