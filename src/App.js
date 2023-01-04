@@ -9,6 +9,14 @@ import Timer from "./pages/Timer";
 import WorldClock from "./pages/WorldClock";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 
+/*Todo
+1.Timer.js
+2.Stopwatch.js
+3. Alarm
+4. signIn modal and func
+5. Focus.js
+6. Theming in setting.js 
+*/
 export default function App(props) {
   const { window } = props;
   const container =

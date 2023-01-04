@@ -72,6 +72,9 @@ const theme = createTheme({
             backgroundColor: "#f7f7f7",
             transform: "translateY(-5px)",
             boxShadow: "0px 2px 4px 2px #F0F0F0",
+
+            "& circle": { stroke: "#eeee" },
+            "& .outerBorder": { border: "2px solid #e9e9e9" },
           },
         },
       },

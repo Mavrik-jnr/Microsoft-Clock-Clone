@@ -17,31 +17,29 @@ function ListItemLink(props) {
   const { icon, primary, to } = props;
 
   return (
-    <li>
-      <ListItemButton
-        component={Link}
-        to={to}
-        sx={{
-          minHeight: 48,
-          justifyContent: "space-between",
-          gap: "15px",
-          //   px: 2.5,
-        }}
-      >
-        {icon ? (
-          <ListItemIcon
-            sx={{
-              minWidth: 0,
-              color: "#191919",
-              justifyContent: "center",
-            }}
-          >
-            {icon}
-          </ListItemIcon>
-        ) : null}
-        <ListItemText primary={primary} color="#1a1a1a" />
-      </ListItemButton>
-    </li>
+    <ListItemButton
+      component={Link}
+      to={to}
+      sx={{
+        minHeight: 48,
+        justifyContent: "space-between",
+        gap: "15px",
+        //   px: 2.5,
+      }}
+    >
+      {icon ? (
+        <ListItemIcon
+          sx={{
+            minWidth: 0,
+            color: "#191919",
+            justifyContent: "center",
+          }}
+        >
+          {icon}
+        </ListItemIcon>
+      ) : null}
+      <ListItemText primary={primary} color="#1a1a1a" />
+    </ListItemButton>
   );
 }
 

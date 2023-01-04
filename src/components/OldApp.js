@@ -21,6 +21,7 @@ import { Card } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import AnimatedPage from "./AnimatedPage";
+import { styled, useTheme } from "@mui/material/styles";
 
 const drawerWidth = 350;
 
