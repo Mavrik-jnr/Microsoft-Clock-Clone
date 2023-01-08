@@ -73,7 +73,7 @@ const theme = createTheme({
             transform: "translateY(-5px)",
             boxShadow: "0px 2px 4px 2px #F0F0F0",
 
-            "& circle": { stroke: "#eeee" },
+            "& .bgSaku": { stroke: "#eeee" },
             "& .outerBorder": { border: "2px solid #e9e9e9" },
           },
         },

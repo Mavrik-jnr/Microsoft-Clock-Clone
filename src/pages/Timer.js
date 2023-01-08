@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import AnimatedPage from "../components/AnimatedPage";
 import Grid from "@mui/material/Unstable_Grid2";
 import Card from "../components/Card";
 import { timerData } from "../utils/timerMockups";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 /*Welcome back
 1. the timer resets when paused, make the play pause of the timers more efficient, my last thought process 
-was to store in session storage, and safely modify the object there
+was to store in session storage, and safely modify the object there +
 
-2. make the ring match with the reducing live time. initialTime - currentTime/100 * 620
+2. + fix the replay of the timer which causes it to hide the accent color when replayed, also the time can't be deducted by 25 it's slowr than reality. increasing this value makes the time accurate and ring jerky while reducing. initialTime - currentTime/100 * 620 +
 
 3. do the timer expand thing
 
@@ -21,19 +23,8 @@ was to store in session storage, and safely modify the object there
 
 function Timer() {
   const [active, setActive] = useState([]);
-  const data = {
-    Burpees: {
-      label: "Burpees",
-      //00:24:00
-      initialTime: 1440000,
-      liveTime: 1440000,
-    },
-    Plank: {
-      label: "Plank",
-      //00:15:00
-      initialTime: 900000,
-      liveTime: 900000,
-    },
+
+  let timerdata = {
     "Hold Breath": {
       label: "Hold Breath",
       //00:30:00
@@ -43,11 +34,25 @@ function Timer() {
     "Skip Rope": {
       label: "Skip Rope",
       //01:00:00
-      initialTime: 3600000,
-      liveTime: 3600000,
+      initialTime: 45000,
+      liveTime: 45000,
+    },
+    clap: {
+      label: "clap",
+      //01:00:00
+      initialTime: 5000,
+      liveTime: 5000,
+    },
+    "clean up": {
+      label: "clean up",
+      //01:00:00
+      initialTime: 10000,
+      liveTime: 10000,
     },
   };
-  const [timers, setTimers] = useState(timerData);
+  const data = useRef(timerdata);
+
+  const [timers, setTimers] = useState(timerdata);
   // console.log(
   //   ...active.map((key) => {
   //     return {
@@ -60,9 +65,22 @@ function Timer() {
   // );
   useEffect(() => {
     const Timer = setInterval(() => {
-      for (const i of active) {
-        console.log(active);
-        data[i].liveTime = data[i].liveTime - 1000;
+      if (active.length !== 0) {
+        for (let i of active) {
+          console.log(data);
+          data.current[i].liveTime = data.current[i].liveTime - 1000;
+          // if (data.current[i].liveTime === -1000) {
+          //   data.current[i].liveTime = data.current[i].initialTime - 1000;
+          // }
+        }
+        setTimers({
+          ...timers,
+          ...data.current,
+          // ...merge,
+          // ...updatedObject.map((item) => {
+          //   return ...item
+          // }),
+        });
       }
 
       // set;
@@ -81,36 +99,36 @@ function Timer() {
       // }, {});
       // console.log(merge);
 
-      setTimers({
-        ...timers,
-        ...data,
-        // ...merge,
-        // ...updatedObject.map((item) => {
-        //   return ...item
-        // }),
-      });
-      // console.log(timers.active[0]);
+      // console.log("frozen data", timers);
     }, 1000);
     // console.log(timers);
+    if (active.length === 0) {
+      clearInterval(Timer);
+    }
     return () => {
       clearInterval(Timer);
     };
-  }, [active, timers]);
+  }, [active]);
 
   return (
     <AnimatedPage>
+      <ToastContainer autoClose={12000} />
       {/* gg */}
       <Grid container spacing={2}>
-        {Object.keys(data).map((timer, idx) => {
+        {Object.keys(timers).map((timer, idx) => {
           return (
             <>
               <Grid key={idx} xs={12} sm={6} md={12} lg={6} xl={4}>
                 {/* {console.log(timers[timer])} */}
                 <Card
-                  timer={data[timer]}
-                  time={data[timer].liveTime}
+                  timer={timers[timer]}
+                  time={timers[timer].liveTime}
                   setActive={setActive}
                   active={active}
+                  setTimers={setTimers}
+                  timers={timers}
+                  data={data.current}
+                  id={timer}
                 />
               </Grid>
             </>
